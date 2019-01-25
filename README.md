@@ -1,6 +1,6 @@
 # 1W MQTT Gateway
 
-A simple example of sending multiple 1W temperuature sensors to Exosite's IoT cloud.
+A simple example of sending multiple 1W temperature sensors to Exosite's IoT cloud.
 
 
 ## Setup
@@ -29,7 +29,6 @@ A simple example of sending multiple 1W temperuature sensors to Exosite's IoT cl
    `murano domain --type product --brief`
    Copy this domain name into `AIO_SERVER` in `1w-mqtt-gw.cpp`.
 
-6. Set the SSID and password for your Network
-   Edit the lines for `WLAN_SSID` and `WLAN_PASS` in `1w-mqtt-gw.cpp`.
+6. Upload to an ESP8266 Thing
 
-7. Upload to an ESP8266 Thing
+7. The ESP8266 will start in AP mode. Connect a device to it and setup the access point you want to connect to.

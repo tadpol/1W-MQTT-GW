@@ -5,27 +5,25 @@
 #include <ESP8266WiFi.h>
 #include "Adafruit_MQTT.h"
 #include "Adafruit_MQTT_Client.h"
+#include <DNSServer.h>
+#include <ESP8266WebServer.h>
+#include <WiFiManager.h>
 
 const int ONE_WIRE_BUS = 0;
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
-/************************* WiFi Access Point *********************************/
-const char WLAN_SSID[] = "<SSID>";
-const char WLAN_PASS[] = "<PASSWORD>";
-
 /************************* Murano Setup *********************************/
 const char AIO_SERVER[]   = "<Product Domain Name>";
 const int  AIO_SERVERPORT = 8883;
 const char AIO_USERNAME[] = "123456"; // Device ID (often serial number)
-const char AIO_KEY[]      = "123456789123456789xxx"; // The password you enabled the device with
+const char AIO_KEY[]      = "123456789123456789123456789"; // The password you enabled the device with
 
 WiFiClientSecure client;
 Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
 
 void setup(void)
 {
-  byte led_state = LOW;
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW); // LED is On.
 
@@ -40,13 +38,8 @@ void setup(void)
   
   sensors.begin();
 
-  WiFi.begin(WLAN_SSID, WLAN_PASS);
-  while (WiFi.status() != WL_CONNECTED) {
-    digitalWrite(LED_BUILTIN, led_state);
-    led_state = (led_state==HIGH)?LOW:HIGH;
-    delay(500);
-    Serial.print(("."));
-  }
+  WiFiManager wifiManager;
+  wifiManager.autoConnect();
   Serial.println(" WiFi connected.");
 
   digitalWrite(LED_BUILTIN, HIGH); // HIGH turns LED off.
